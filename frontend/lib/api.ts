@@ -1,0 +1,143 @@
+const API_URL =
+  process.env.NEXT_PUBLIC_API_URL ||
+  "http://localhost:8000";
+
+export type Subject = {
+  id: number;
+  name: string;
+  description: string | null;
+  icon: string | null;
+  progress: number;
+  created_at: string;
+};
+
+export type Topic = {
+  id: number;
+  subject_id: number;
+  name: string;
+  description: string | null;
+  order: number;
+  completed: boolean;
+  created_at: string;
+};
+
+
+export async function getSubjects(): Promise<Subject[]> {
+  const response = await fetch(
+    `${API_URL}/api/subjects`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch subjects");
+  }
+
+  return response.json();
+}
+
+
+export async function getSubject(
+  id: number
+): Promise<Subject> {
+  const response = await fetch(
+    `${API_URL}/api/subjects/${id}`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch subject");
+  }
+
+  return response.json();
+}
+
+
+export async function getTopics(
+  subjectId: number
+): Promise<Topic[]> {
+  const response = await fetch(
+    `${API_URL}/api/topics?subject_id=${subjectId}`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch topics");
+  }
+
+  return response.json();
+}
+
+
+export async function createTopic(data: {
+  subject_id: number;
+  name: string;
+  description?: string;
+  order?: number;
+  completed?: boolean;
+}): Promise<Topic> {
+  const response = await fetch(
+    `${API_URL}/api/topics`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to create topic");
+  }
+
+  return response.json();
+}
+
+
+export async function deleteTopic(
+  topicId: number
+): Promise<void> {
+  const response = await fetch(
+    `${API_URL}/api/topics/${topicId}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to delete topic");
+  }
+}
+
+export async function updateTopic(
+  topicId: number,
+  data: {
+    name?: string;
+    description?: string;
+    order?: number;
+    completed?: boolean;
+  }
+): Promise<Topic> {
+  const response = await fetch(
+    `${API_URL}/api/topics/${topicId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to update topic");
+  }
+
+  return response.json();
+}
