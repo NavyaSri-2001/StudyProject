@@ -141,3 +141,91 @@ export async function updateTopic(
 
   return response.json();
 }
+
+export type Note = {
+  id: number;
+  topic_id: number;
+  title: string;
+  content: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export async function getNotes(
+  topicId: number
+): Promise<Note[]> {
+  const response = await fetch(
+    `${API_URL}/api/notes?topic_id=${topicId}`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch notes");
+  }
+
+  return response.json();
+}
+
+export async function createNote(data: {
+  topic_id: number;
+  title: string;
+  content: string;
+}): Promise<Note> {
+  const response = await fetch(
+    `${API_URL}/api/notes`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to create note");
+  }
+
+  return response.json();
+}
+export async function updateNote(
+  noteId: number,
+  data: {
+    title?: string;
+    content?: string;
+  }
+): Promise<Note> {
+  const response = await fetch(
+    `${API_URL}/api/notes/${noteId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to update note");
+  }
+
+  return response.json();
+}
+
+export async function deleteNote(
+  noteId: number
+): Promise<void> {
+  const response = await fetch(
+    `${API_URL}/api/notes/${noteId}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to delete note");
+  }
+}

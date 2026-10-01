@@ -14,6 +14,7 @@ import {
 
 import AddTopicForm from "./components/AddTopicForm";
 import EditTopicForm from "./components/EditTopicForm";
+import TopicNotes from "./components/TopicNotes";
 
 export default function SubjectPage() {
   const params = useParams();
@@ -266,7 +267,7 @@ export default function SubjectPage() {
                       Order: {topic.order}
                     </p>
                   </div>
-
+                 
                   {/* Actions */}
 
                   <div className="flex gap-2">
@@ -288,6 +289,8 @@ export default function SubjectPage() {
                       Delete
                     </button>
                   </div>
+
+                  <TopicNotes topicId={topic.id} />
                 </div>
               </div>
             ))}
