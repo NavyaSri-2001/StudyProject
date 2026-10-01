@@ -9,6 +9,7 @@ from app.database.connection import Base, settings
 from app.models.subject import Subject  # noqa: F401
 from app.models.topic import Topic  # noqa: F401
 from app.models.note import Note  # noqa: F401
+from app.models.resource import Resource
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

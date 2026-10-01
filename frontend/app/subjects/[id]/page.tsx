@@ -15,6 +15,7 @@ import {
 import AddTopicForm from "./components/AddTopicForm";
 import EditTopicForm from "./components/EditTopicForm";
 import TopicNotes from "./components/TopicNotes";
+import TopicResources from "./components/TopicResources";
 
 export default function SubjectPage() {
   const params = useParams();
@@ -291,6 +292,7 @@ export default function SubjectPage() {
                   </div>
 
                   <TopicNotes topicId={topic.id} />
+                  <TopicResources topicId={topic.id} />
                 </div>
               </div>
             ))}

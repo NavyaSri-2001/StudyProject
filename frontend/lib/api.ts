@@ -229,3 +229,97 @@ export async function deleteNote(
     throw new Error("Failed to delete note");
   }
 }
+
+export type Resource = {
+  id: number;
+  topic_id: number;
+  title: string;
+  type: string;
+  url: string;
+  description: string | null;
+  created_at: string;
+};
+
+export async function getResources(
+  topicId: number
+): Promise<Resource[]> {
+  const response = await fetch(
+    `${API_URL}/api/resources?topic_id=${topicId}`,
+    {
+      cache: "no-store",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch resources");
+  }
+
+  return response.json();
+}
+
+export async function createResource(data: {
+  topic_id: number;
+  title: string;
+  type: string;
+  url: string;
+  description?: string;
+}): Promise<Resource> {
+  const response = await fetch(
+    `${API_URL}/api/resources`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to create resource");
+  }
+
+  return response.json();
+}
+
+export async function updateResource(
+  resourceId: number,
+  data: {
+    title?: string;
+    type?: string;
+    url?: string;
+    description?: string;
+  }
+): Promise<Resource> {
+  const response = await fetch(
+    `${API_URL}/api/resources/${resourceId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to update resource");
+  }
+
+  return response.json();
+}
+
+export async function deleteResource(
+  resourceId: number
+): Promise<void> {
+  const response = await fetch(
+    `${API_URL}/api/resources/${resourceId}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to delete resource");
+  }
+}

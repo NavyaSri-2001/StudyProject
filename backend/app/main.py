@@ -4,6 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.subjects import router as subjects_router
 from app.api.topics import router as topics_router
 from app.api.notes import router as notes_router
+from app.api.resources import router as resources_router
+
 
 app = FastAPI(
     title="Study Hub API",
@@ -22,6 +24,7 @@ app.add_middleware(
 app.include_router(subjects_router)
 app.include_router(topics_router)
 app.include_router(notes_router)
+app.include_router(resources_router)
 
 @app.get("/")
 async def root():
