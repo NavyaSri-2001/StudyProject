@@ -323,3 +323,71 @@ export async function deleteResource(
     throw new Error("Failed to delete resource");
   }
 }
+
+export async function createSubject(data: {
+  name: string;
+  description?: string;
+  icon?: string;
+  progress?: number;
+}): Promise<Subject> {
+  const response = await fetch(
+    `${API_URL}/api/subjects`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to create subject");
+  }
+
+  return response.json();
+}
+
+
+export async function updateSubject(
+  subjectId: number,
+  data: {
+    name?: string;
+    description?: string;
+    icon?: string;
+    progress?: number;
+  }
+): Promise<Subject> {
+  const response = await fetch(
+    `${API_URL}/api/subjects/${subjectId}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to update subject");
+  }
+
+  return response.json();
+}
+
+
+export async function deleteSubject(
+  subjectId: number
+): Promise<void> {
+  const response = await fetch(
+    `${API_URL}/api/subjects/${subjectId}`,
+    {
+      method: "DELETE",
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to delete subject");
+  }
+}

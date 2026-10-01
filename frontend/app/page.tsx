@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getSubjects } from "@/lib/api";
 
 type Subject = {
@@ -48,12 +49,13 @@ export default async function Home() {
               My Subjects
             </h2>
 
-            <button
+            <Link
+              href="/subjects"
               className="rounded-lg bg-blue-600 px-4 py-2
                          text-sm font-medium hover:bg-blue-500"
             >
               + Add Subject
-            </button>
+            </Link>
           </div>
 
           {subjects.length === 0 ? (
